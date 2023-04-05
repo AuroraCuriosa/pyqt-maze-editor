@@ -4,7 +4,7 @@ Created on 5 Apr 2023
 @author: Rob Probin
 '''
 
-class QIcon(object):
+class QIcon():
     '''
     QtGui
     '''
@@ -15,3 +15,4 @@ class QIcon(object):
         Constructor
         '''
         
+QKeySequence = None
