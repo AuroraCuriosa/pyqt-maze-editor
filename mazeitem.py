@@ -10,10 +10,12 @@ import math
 import struct
 from itertools import product
 
-import numpy
+#import numpy
 
 # from PyQt5.QtCore import
-import numpy as np
+#import numpy as np
+large_num = 1e100
+
 from PyQt5.QtGui import QBrush, QPen, QColor, QPicture, QFont, QPainter, QFontMetrics
 from PyQt5.QtCore import QPointF
 from PyQt5.QtWidgets import QGraphicsItem
@@ -35,8 +37,9 @@ GOAL_COLOR = QColor(0,42,0)
 HOME_COLOR = QColor(16,0,16)
 GRAY = QColor(100, 100, 100)
 GREEN = QColor(0, 255, 0)
+CYAN = QColor(0, 255, 255)
 RED = QColor(255, 0, 0)
-YELLOW = QColor(QtCore.Qt.yellow)
+YELLOW = QColor(255, 255, 0)
 ORANGE = QColor(223, 108, 27)
 WHITE = QColor(255, 255, 255)
 
@@ -147,7 +150,7 @@ class MazeItem(QGraphicsItem):
             return
         if not self.display_paths:
             return
-        if self.flooder.get_cost_at(0, 0) == np.inf:
+        if self.flooder.get_cost_at(0, 0) == large_num:
             return
         path_length = 0
         painter.save()
@@ -198,7 +201,7 @@ class MazeItem(QGraphicsItem):
                 painter.setPen(YELLOW)
             else:
                 painter.setPen(ORANGE)
-            if cost != np.inf:
+            if cost != large_num:
                 painter.drawText(inner_rect, QtCore.Qt.AlignCenter, F"{cost}")
         painter.restore()
 
@@ -304,7 +307,7 @@ class MazeItem(QGraphicsItem):
 
     def paint_notes(self, painter):
         ''' This will be where we display route metrics from a list of strings'''
-        if self.flooder.get_cost_at(0, 0) == np.inf:
+        if self.flooder.get_cost_at(0, 0) == large_num:
             self.notes = 'There is no path to the goal'
         else:
             self.notes = F'Simple Manhattan flood gives cell count to goal of {self.flooder.get_cost_at(0, 0)}'

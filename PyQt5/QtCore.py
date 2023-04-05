@@ -15,6 +15,8 @@ class Qt():
         Constructor
         '''
         
+    class PenStyle(): 
+        NoPen = None
 
 # fake version        
 QT_VERSION_STR = "1.0.0"
@@ -31,3 +33,10 @@ QFileInfo = None
 QSaveFile = None
 QSettings = None
 QTextStream = None
+
+class pyqtSignal():
+    def __init__(self, x, y, z):
+        pass
+    
+QPoint = None
+QPointF = None

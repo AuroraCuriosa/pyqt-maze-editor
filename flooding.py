@@ -8,9 +8,11 @@
 # python version >= 3.8
 # ============================================================================ #
 import sys
-import numpy as np
+#import numpy as np
 from itertools import product
 from maze import Maze
+
+large_num = 1e100
 
 
 class Manhattan:
@@ -26,7 +28,7 @@ class Manhattan:
 
     def set_maze(self, maze):
         self.maze = maze
-        self.step_map = [np.inf] * maze.cell_index_size
+        self.step_map = [large_num] * maze.cell_index_size
         self.heading_map = [Maze.Unknown] * maze.cell_index_size
 
     def update(self, roots=None):
@@ -46,7 +48,7 @@ class Manhattan:
         roots = roots if roots else maze.goals
         # initialize
         for c in step_map:
-            c = np.inf
+            c = large_num
         open_list = []
         for x, y in roots:
             step_map[maze.get_cell_index(x, y)] = 0
@@ -79,13 +81,13 @@ class Manhattan:
 
     def get_cost_at(self, x, y):
         if self.maze.is_outside_maze(x, y):
-            return np.inf
+            return large_num
         cost = self.step_map[self.maze.get_cell_index(x, y)]
         return cost
 
     def get_neighbour_cost(self, x, y, heading):
         if self.maze.wall(x, y, heading):
-            return np.inf
+            return large_num
         if heading == Maze.North:
             return self.step_map[self.maze.get_cell_index(x, y + 1)]
         if heading == Maze.East:
@@ -114,7 +116,7 @@ class Manhattan:
         if self.maze is None:
             return
         heading_map = self.heading_map
-        smallest_cost = np.inf
+        smallest_cost = large_num
         for (x, y) in product(range(self.maze.size), repeat=2):
             i = self.maze.get_cell_index(x, y)
             heading_now = self.heading_map[i]
@@ -130,7 +132,7 @@ class Manhattan:
         if self.maze is None:
             return
         self.heading_map = [Maze.Unknown] * self.maze.cell_index_size
-        if self.step_map[0] == np.inf:
+        if self.step_map[0] == large_num:
             self.heading_map[0] = Maze.South
             return
         self.heading_map[0] = Maze.North

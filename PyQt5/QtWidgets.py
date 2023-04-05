@@ -21,6 +21,11 @@ class QMainWindow():
     def __init__(self):
         pass
     
+    def setObjectName(self, name):
+        pass
+    
+    def resize(self, x, y):
+        pass
     
 # fake version        
 QT_VERSION_STR = "1.0.0"
@@ -42,8 +47,16 @@ def QGraphicsScene():
 
 
 QFileDialog = None
-QMainWindow = None
-QTextEdit = None
 QTextEdit = None
 QAction = None
 QWidget = None 
+
+
+class QGraphicsView():
+    def __init__(self):
+        pass
+
+class QGraphicsItem():
+    def __init__(self):
+        pass
+ 
