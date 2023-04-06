@@ -9,8 +9,7 @@ class QIcon():
     QtGui
     '''
 
-
-    def __init__(self, filename):
+    def __init__(self, filename=None):
         '''
         Constructor
         '''
@@ -20,10 +19,47 @@ class QIcon():
     def fromTheme(theme):
         pass
     
+    def addPixmap(self, filename, param1, param2):
+        pass
     
-QKeySequence = None
+    Normal = 1
+    On = True
+    
+class QPixmap():
+    def __init__(self, filename):
+        pass
+    
+    
+class QKeySequence():
+    @staticmethod
+    def New():
+        pass
+    @staticmethod
+    def Open():
+        pass
+    @staticmethod
+    def Save():
+        pass
+    @staticmethod
+    def SaveAs():
+        pass
+    @staticmethod
+    def Quit():
+        pass
+    
+    #@staticmethod
+    #def setShortcut(param):
+    #    pass
+    
+    
 
-QBrush = None
+class QBrush():
+    def __init__(self, param):
+        pass
+    
+    def setStyle(self, param):
+        pass
+    
 QPen = None
 
 class QColor():
@@ -31,6 +67,17 @@ class QColor():
         pass
 
 QPicture = None
-QFont = None
+
+class QFont():
+    def __init__(self):
+        pass
+    def setBold(self, state):
+        pass
+    
+    def setWeight(self, weight):
+        pass
+    
 QPainter = None
 QFontMetrics = None
+
+
