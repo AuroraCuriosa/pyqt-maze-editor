@@ -11,7 +11,7 @@
 
 
 import sys
-#import numpy as np
+import numpy as np
 
 MAZE_SIZE = 16
 
@@ -43,13 +43,8 @@ class Maze:
         # the number of walls to save: x * y * z
         self.wall_index_size = size * size * 2
         # wall data; wall states and known flags
-        
-#        self.walls = np.zeros(self.wall_index_size, dtype=bool)
-#        self.knowns = np.zeros(self.wall_index_size, dtype=bool)
-# could have used array here as well (instead of list)
-        self.walls = [0]*self.wall_index_size
-        self.knowns = [0]*self.wall_index_size
-
+        self.walls = np.zeros(self.wall_index_size, dtype=bool)
+        self.knowns = np.zeros(self.wall_index_size, dtype=bool)
         # start and goal cells
         self.start = []
         self.goals = []
