@@ -63,8 +63,11 @@ class QBrush():
 QPen = None
 
 class QColor():
-    def __init__(self, r, g, b):
-        pass
+    def __init__(self, r, g=None, b=None):
+        if g is not None:
+            r = (r << 16) + (g << 8) + b
+
+        self.colour = r
 
 QPicture = None
 

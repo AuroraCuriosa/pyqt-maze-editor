@@ -3,7 +3,7 @@ Created on 5 Apr 2023
 
 @author: Rob Probin
 '''
-from test.test_funcattrs import StaticMethodAttrsTest
+import os
 
 class Qt():
     '''
@@ -23,6 +23,7 @@ class Qt():
     SolidPattern = 10
     Horizontal = 20
     AutoText = 30
+    yellow = 0xFFFF00
     
 # fake version        
 QT_VERSION_STR = "1.0.0"
@@ -30,14 +31,27 @@ QT_VERSION_STR = "1.0.0"
 class QDir():
     @staticmethod
     def currentPath():
-        pass
-    
+        return os.getcwd()
+        #return os.path.dirname(os.path.realpath(__file__))    # current Python file path
 
-QByteArray = None
+class QByteArray():
+    def __init__(self):
+        self.array_size = 0
+    
+    def size(self):
+        return self.array_size
+
 QFile = None
 QFileInfo = None
 QSaveFile = None
-QSettings = None
+
+class QSettings():
+    def __init__(self, group, setting):
+        pass
+
+    def value(self, setting, destination):
+        return destination
+
 QTextStream = None
 
 class pyqtSignal():

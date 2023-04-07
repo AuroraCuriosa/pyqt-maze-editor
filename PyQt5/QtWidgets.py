@@ -3,22 +3,19 @@ Created on 5 Apr 2023
 
 @author: Rob Probin
 '''
-from pip._vendor.pyparsing.helpers import opAssoc
-from tkinter.dnd import Icon
-from test.test_funcattrs import StaticMethodAttrsTest
+from PyQt5.QtCore import QRect
+
 
 class QApplication():
     '''
     Fake QApplication
     '''
 
-
     def __init__(self, args):
         '''
         Constructor
         '''
         pass
-    
     
   
 class QFrame():
@@ -38,7 +35,9 @@ class QFrame():
     def setObjectName(self, name):
         pass
 
+
 class QLabel():
+
     def __init__(self, widget):
         pass
 
@@ -54,8 +53,18 @@ class QLabel():
     def setText(self, text):
         pass
 
+
+class QToolBar():
+
+    def __init__(self, toolbar):
+        pass
+    
+    def addAction(self, action):
+        pass
+    
     
 class QMainWindow():
+
     def __init__(self):
         self.menu = None
     
@@ -82,7 +91,10 @@ class QMainWindow():
         self.menu = menu
     
     def setStatusBar(self, bar):
-        pass
+        self.status_bar = bar
+    
+    def statusBar(self):
+        return self.status_bar
     
     def setWindowTitle(self, text):
         pass
@@ -94,19 +106,27 @@ class QMainWindow():
         return self.menu
     
     def addToolBar(self, toolbar):
-        pass
+        return QToolBar(toolbar)
+
 
 # fake version        
 QT_VERSION_STR = "1.0.0"
 
+
 class QStatusBar():
+
     def __init__(self, window):
         pass
     
     def setObjectName(self, name):
         pass
 
+    def showMessage(self, text):
+        pass
+
+
 class QMenu():
+
     def __init__(self):
         pass
     
@@ -118,6 +138,7 @@ class QMenu():
     
 
 class QMenuBar():
+
     def __init__(self, window):
         pass
     
@@ -132,8 +153,10 @@ class QMenuBar():
 
     def addSeparator(self):
         pass
+
     
 class QMessageBox():
+
     def __init__(self):
         pass
     
@@ -143,15 +166,30 @@ class QMessageBox():
 
     Save = 0
     Cancel = 1
+
+
+class _internal_scene():
+
+    def __init__(self):
+        pass
     
+    def addItem(self, item):
+        pass
+
+    def sceneRect(self):
+        return QRect(1, 1, 10, 10)
+
+
 def QGraphicsScene():
-    pass
+    return _internal_scene()
 
 
 QFileDialog = None
 QTextEdit = None
 
+
 class QAction():
+
     def __init__(self, window, param2=None, param3=None):
         pass
     
@@ -170,13 +208,15 @@ class QAction():
     def setStatusTip(self, text):
         pass
     
-    
     class triggered():
+
         @staticmethod
         def connect(entry):
             pass
+
     
 class QSizePolicy():
+
     def __init__(self, x, y):
         pass
     
@@ -194,7 +234,9 @@ class QSizePolicy():
     
     Expanding = 1
 
+
 class QGraphicsView():
+
     def __init__(self, parent):
         print("Create QGraphicsView")
 
@@ -234,8 +276,18 @@ class QGraphicsView():
     def setObjectName(self, name):
         pass
         
+    def setScene(self, scene):
+        pass
+    
+    def fitInView(self, view):
+        pass
+    
+    def update(self):
+        pass
+
     
 class QVBoxLayout():
+
     def __init__(self):
         print("Create QVBoxLayout")
 
@@ -247,8 +299,10 @@ class QVBoxLayout():
 
     def addLayout(self, layout):
         pass
+
     
 class QHBoxLayout():
+
     def __init__(self):
         print("Create QHBoxLayout")
 
@@ -263,8 +317,10 @@ class QHBoxLayout():
     
     def setStretch(self, x, y):
         pass
+
     
 class QSpinBox():
+
     def __init__(self, widget):
         pass
 
@@ -273,6 +329,7 @@ class QSpinBox():
 
     
 class QGridLayout():
+
     def __init__(self, widget):
         print("Create QGridLayout")
 
@@ -281,31 +338,40 @@ class QGridLayout():
 
     def addLayout(self, layout, x, y, x2, y2):
         pass
+
         
 class QWidget():
+
     def __init__(self, window):
         print("Create QWidget")
 
     def setObjectName(self, name):
         print("QWidget Set object name")
 
+
 class QSlider():
+
     def __init__(self, widget):
         pass
     
     def setOrientation(self, param):
         pass
     
-    
     def setObjectName(self, name):
         pass
     
     
 class QGraphicsItem():
+
     def __init__(self):
         pass
+
+    def setScene(self):
+        pass
+    
  
 class QPushButton():
+
     def __init__(self, widget):
         pass
     
@@ -316,8 +382,8 @@ class QPushButton():
         pass
     
     
-    
 class QCheckBox():
+
     def __init__(self, widget):
         pass
     
@@ -328,7 +394,17 @@ class QCheckBox():
         pass
 
     
+class _ConnectType():
+
+    def __init__(self):
+        pass
+    
+    def connect(self, text_filter):
+        pass
+    
+    
 class QLineEdit():
+
     def __init__(self, widget):
         pass
     
@@ -341,11 +417,39 @@ class QLineEdit():
     def setPlaceholderText(self, text):
         pass
     
+    textChanged = _ConnectType()
+
+
+class _magic():
+
+    def connect(self, item_changed):
+        pass
+
+
+class _text():
+
+    def text(self):
+        return ""
+
     
 class QListWidget():
+
     def __init__(self, widget):
         pass
 
     def setObjectName(self, name):
         pass
  
+    def clear(self):
+        pass
+    
+    def addItem(self, text):
+        pass
+    
+    def setCurrentRow(self, row_num):
+        pass
+        
+    currentItemChanged = _magic()
+    
+    def currentItem(self):
+        return _text()
