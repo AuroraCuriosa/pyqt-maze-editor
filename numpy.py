@@ -2,18 +2,15 @@
 Created on 7 Apr 2023
 
 @author: Rob Probin
+
+Emulate the minimal piece of numpy we use.
+
 '''
 
-inf = 1e100 # poor emulation of infinity
+#inf = 1e100 # poor emulation of infinity
+inf = float('inf')
 
-class MyClass(object):
-    '''
-    classdocs
-    '''
+def zeros(size):
+    # lists are pretty fast
+    return [0]*size
 
-
-    def __init__(self, params):
-        '''
-        Constructor
-        '''
-        

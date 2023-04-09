@@ -4,6 +4,8 @@ Created on 5 Apr 2023
 @author: Rob Probin
 '''
 
+import inspect
+
 class QIcon():
     '''
     QtGui
@@ -13,52 +15,63 @@ class QIcon():
         '''
         Constructor
         '''
-        pass
+        current_class_name = self.__class__.__name__
+        current_method_name = inspect.currentframe().f_code.co_name
+        print(f"Current class: {current_class_name}, Current method: {current_method_name} {filename}")
+
     
     @staticmethod
     def fromTheme(theme):
-        pass
+        print(f"QIcon::fromTheme {theme}")
     
     def addPixmap(self, filename, param1, param2):
-        pass
+        current_class_name = self.__class__.__name__
+        current_method_name = inspect.currentframe().f_code.co_name
+        print(f"Current class: {current_class_name}, Current method: {current_method_name} {filename} {param1} {param2}")
     
     Normal = 1
     On = True
     
 class QPixmap():
     def __init__(self, filename):
-        pass
+        current_class_name = self.__class__.__name__
+        current_method_name = inspect.currentframe().f_code.co_name
+        print(f"Current class: {current_class_name}, Current method: {current_method_name} {filename}")
     
     
 class QKeySequence():
     @staticmethod
     def New():
-        pass
+        print("QKeySequence::New")
+        
     @staticmethod
     def Open():
-        pass
+        print("QKeySequence::Open")
+
     @staticmethod
     def Save():
-        pass
+        print("QKeySequence::Save")
+
     @staticmethod
     def SaveAs():
-        pass
+        print("QKeySequence::SaveAs")
+
     @staticmethod
     def Quit():
-        pass
-    
-    #@staticmethod
-    #def setShortcut(param):
-    #    pass
-    
+        print("QKeySequence::Quit")
+        
     
 
 class QBrush():
     def __init__(self, param):
-        pass
+        current_class_name = self.__class__.__name__
+        current_method_name = inspect.currentframe().f_code.co_name
+        print(f"Current class: {current_class_name}, Current method: {current_method_name} {param}")
     
     def setStyle(self, param):
-        pass
+        current_class_name = self.__class__.__name__
+        current_method_name = inspect.currentframe().f_code.co_name
+        print(f"Current class: {current_class_name}, Current method: {current_method_name} {param}")
     
 QPen = None
 
@@ -73,12 +86,19 @@ QPicture = None
 
 class QFont():
     def __init__(self):
-        pass
+        current_class_name = self.__class__.__name__
+        current_method_name = inspect.currentframe().f_code.co_name
+        print(f"Current class: {current_class_name}, Current method: {current_method_name}")
+
     def setBold(self, state):
-        pass
+        current_class_name = self.__class__.__name__
+        current_method_name = inspect.currentframe().f_code.co_name
+        print(f"Current class: {current_class_name}, Current method: {current_method_name} {state}")
     
     def setWeight(self, weight):
-        pass
+        current_class_name = self.__class__.__name__
+        current_method_name = inspect.currentframe().f_code.co_name
+        print(f"Current class: {current_class_name}, Current method: {current_method_name} {weight}")
     
 QPainter = None
 QFontMetrics = None

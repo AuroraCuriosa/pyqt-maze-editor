@@ -4,6 +4,7 @@ Created on 5 Apr 2023
 @author: Rob Probin
 '''
 import os
+import inspect
 
 class Qt():
     '''
@@ -15,7 +16,10 @@ class Qt():
         '''
         Constructor
         '''
-        
+        current_class_name = self.__class__.__name__
+        current_method_name = inspect.currentframe().f_code.co_name
+        print(f"Current class: {current_class_name}, Current method: {current_method_name} {params}")
+
     class PenStyle(): 
         NoPen = None
 
@@ -47,16 +51,23 @@ QSaveFile = None
 
 class QSettings():
     def __init__(self, group, setting):
-        pass
+        current_class_name = self.__class__.__name__
+        current_method_name = inspect.currentframe().f_code.co_name
+        print(f"Current class: {current_class_name}, Current method: {current_method_name} {group} {setting}")
 
     def value(self, setting, destination):
+        current_class_name = self.__class__.__name__
+        current_method_name = inspect.currentframe().f_code.co_name
+        print(f"Current class: {current_class_name}, Current method: {current_method_name} {setting} {destination}")
         return destination
 
 QTextStream = None
 
 class pyqtSignal():
     def __init__(self, x, y, z):
-        pass
+        current_class_name = self.__class__.__name__
+        current_method_name = inspect.currentframe().f_code.co_name
+        print(f"Current class: {current_class_name}, Current method: {current_method_name} {x} {y} {z}")
     
 QPoint = None
 QPointF = None
@@ -64,21 +75,25 @@ QPointF = None
 
 class QSize():
     def __init__(self, x, y):
-        pass
-    
+        current_class_name = self.__class__.__name__
+        current_method_name = inspect.currentframe().f_code.co_name
+        print(f"Current class: {current_class_name}, Current method: {current_method_name} {x} {y}")
+   
 class QRect():
     def __init__(self, x1, y1, x2, y2):
-        pass
+        current_class_name = self.__class__.__name__
+        current_method_name = inspect.currentframe().f_code.co_name
+        print(f"Current class: {current_class_name}, Current method: {current_method_name} {x1} {y1} {x2} {y2}")
     
     
 class QCoreApplication():
     @staticmethod
     def translate(window, text):
-        pass
+        print(f"QCoreApplication::translate {window} {text}")
     
 class QMetaObject():
     @staticmethod
     def connectSlotsByName(window):
-        pass
+        print(f"QMetaObject::connectSlotsByName {window}")
     
     
