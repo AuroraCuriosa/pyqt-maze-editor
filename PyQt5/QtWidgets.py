@@ -3,7 +3,7 @@ Created on 5 Apr 2023
 
 @author: Rob Probin
 '''
-from PyQt5.QtCore import QRect
+from PyQt5.QtCore import QRect, pyqtSignal
 import inspect
     
 
@@ -20,7 +20,17 @@ class QApplication():
         current_method_name = inspect.currentframe().f_code.co_name
         print(f"Current class: {current_class_name}, Current method: {current_method_name} {args}")
     
-  
+    def exec_(self):
+        error = 0
+        current_class_name = self.__class__.__name__
+        current_method_name = inspect.currentframe().f_code.co_name
+        print(f"Current class: {current_class_name}, Current method: {current_method_name}")
+        
+        print("main loop for QT application goes here :-)")
+
+        return error
+    
+    
 class QFrame():
     NoFrame = 1
     HLine = 2
@@ -160,7 +170,13 @@ class QMainWindow():
         current_class_name = self.__class__.__name__
         current_method_name = inspect.currentframe().f_code.co_name
         print(f"Current class: {current_class_name}, Current method: {current_method_name} {state}")
-        
+    
+    def show(self):
+        current_class_name = self.__class__.__name__
+        current_method_name = inspect.currentframe().f_code.co_name
+        print(f"Current class: {current_class_name}, Current method: {current_method_name}")
+
+
 # fake version        
 QT_VERSION_STR = "1.0.0"
 
@@ -574,7 +590,8 @@ class QCheckBox():
         current_class_name = self.__class__.__name__
         current_method_name = inspect.currentframe().f_code.co_name
         print(f"Current class: {current_class_name}, Current method: {current_method_name} {widget}")
-    
+        self.stateChanged = pyqtSignal()
+        
     def setObjectName(self, name):
         current_class_name = self.__class__.__name__
         current_method_name = inspect.currentframe().f_code.co_name
