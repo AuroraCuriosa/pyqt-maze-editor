@@ -606,20 +606,7 @@ class QCheckBox():
         current_class_name = self.__class__.__name__
         current_method_name = inspect.currentframe().f_code.co_name
         print(f"Current class: {current_class_name}, Current method: {current_method_name} {state}")
-    
-        
-class _ConnectType():
 
-    def __init__(self):
-        current_class_name = self.__class__.__name__
-        current_method_name = inspect.currentframe().f_code.co_name
-        print(f"Current class: {current_class_name}, Current method: {current_method_name}")
-    
-    def connect(self, text_filter):
-        current_class_name = self.__class__.__name__
-        current_method_name = inspect.currentframe().f_code.co_name
-        print(f"Current class: {current_class_name}, Current method: {current_method_name} {text_filter}")
-    
     
 class QLineEdit():
 
@@ -627,7 +614,8 @@ class QLineEdit():
         current_class_name = self.__class__.__name__
         current_method_name = inspect.currentframe().f_code.co_name
         print(f"Current class: {current_class_name}, Current method: {current_method_name} {widget}")
-    
+        self.textChanged = pyqtSignal()
+        
     def setText(self, text):
         current_class_name = self.__class__.__name__
         current_method_name = inspect.currentframe().f_code.co_name
@@ -643,15 +631,6 @@ class QLineEdit():
         current_method_name = inspect.currentframe().f_code.co_name
         print(f"Current class: {current_class_name}, Current method: {current_method_name} {text}")
     
-    textChanged = _ConnectType()
-
-
-class _magic():
-
-    def connect(self, item_changed):
-        current_class_name = self.__class__.__name__
-        current_method_name = inspect.currentframe().f_code.co_name
-        print(f"Current class: {current_class_name}, Current method: {current_method_name} {item_changed}")
 
 
 class _QListWidget_text():
@@ -670,7 +649,8 @@ class QListWidget():
         self.list_data = [] 
         self.name = "QListWidget"
         self.current_row = 0
-        
+        self.currentItemChanged = pyqtSignal()
+
     def setObjectName(self, name):
         self.name = name
         
@@ -685,8 +665,6 @@ class QListWidget():
     def setCurrentRow(self, row_num):
         self.current_row = row_num
         
-    currentItemChanged = _magic()
-    
     def currentItem(self):
         return self.list_data[self.current_row]
 
