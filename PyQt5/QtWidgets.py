@@ -5,7 +5,8 @@ Created on 5 Apr 2023
 '''
 from PyQt5.QtCore import QRect, pyqtSignal
 import inspect
-    
+import asyncio
+import pygame
 
 class QApplication():
     '''
@@ -19,6 +20,38 @@ class QApplication():
         current_class_name = self.__class__.__name__
         current_method_name = inspect.currentframe().f_code.co_name
         print(f"Current class: {current_class_name}, Current method: {current_method_name} {args}")
+        print("We could process args here")
+        
+    async def _pygame_loop(self):
+        pygame.init()
+        screen = pygame.display.set_mode((640, 480))
+        clock = pygame.time.Clock()
+    
+        running = True
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+    
+            # Your game logic and drawing code here
+            screen.fill((0, 0, 0))
+            pygame.draw.circle(screen, (255, 255, 255), [100, 100], 10)
+            pygame.display.flip()
+            #pygame.display.update()
+    
+            # required for 
+            await asyncio.sleep(0)  # Very important, and keep it 0
+            # Sleep for a short duration to allow other tasks to run
+            #await asyncio.sleep(1/60)  # Cap the frame rate at 60 FPS
+    
+            # Update the clock, limit the frame rate to 60
+            clock.tick(60)
+    
+        pygame.quit()
+
+    async def _main(self):
+        # Schedule other async tasks here if needed
+        await self._pygame_loop()
     
     def exec_(self):
         error = 0
@@ -27,7 +60,8 @@ class QApplication():
         print(f"Current class: {current_class_name}, Current method: {current_method_name}")
         
         print("main loop for QT application goes here :-)")
-
+        asyncio.run(self._main())
+    
         return error
     
     
