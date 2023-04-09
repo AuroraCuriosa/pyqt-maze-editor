@@ -45,9 +45,33 @@ class QByteArray():
     def size(self):
         return self.array_size
 
-QFile = None
-QFileInfo = None
-QSaveFile = None
+class QFile():
+    def __init__(self, filename):
+        current_class_name = self.__class__.__name__
+        current_method_name = inspect.currentframe().f_code.co_name
+        print(f"Current class: {current_class_name}, Current method: {current_method_name} {filename}")
+        self._filename = filename
+    
+
+
+class QFileInfo():
+    def __init__(self, filename):
+        current_class_name = self.__class__.__name__
+        current_method_name = inspect.currentframe().f_code.co_name
+        print(f"Current class: {current_class_name}, Current method: {current_method_name} {filename}")
+        self._filename = filename
+    
+    def fileName(self):
+        return self._filename
+
+    
+class QSaveFile():
+    def __init__(self, filename):
+        current_class_name = self.__class__.__name__
+        current_method_name = inspect.currentframe().f_code.co_name
+        print(f"Current class: {current_class_name}, Current method: {current_method_name} {filename}")
+        self._filename = filename
+
 
 class QSettings():
     def __init__(self, group, setting):
@@ -69,6 +93,11 @@ class pyqtSignal():
         current_method_name = inspect.currentframe().f_code.co_name
         print(f"Current class: {current_class_name}, Current method: {current_method_name} {x} {y} {z}")
     
+    def connect(self, function):
+        current_class_name = self.__class__.__name__
+        current_method_name = inspect.currentframe().f_code.co_name
+        print(f"Current class: {current_class_name}, Current method: {current_method_name} {function}")
+        
 QPoint = None
 QPointF = None
 

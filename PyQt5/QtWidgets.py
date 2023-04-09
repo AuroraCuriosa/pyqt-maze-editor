@@ -156,7 +156,11 @@ class QMainWindow():
     def addToolBar(self, toolbar):
         return QToolBar(toolbar)
 
-
+    def setWindowModified(self, state):
+        current_class_name = self.__class__.__name__
+        current_method_name = inspect.currentframe().f_code.co_name
+        print(f"Current class: {current_class_name}, Current method: {current_method_name} {state}")
+        
 # fake version        
 QT_VERSION_STR = "1.0.0"
 
@@ -539,7 +543,12 @@ class QGraphicsItem():
         current_class_name = self.__class__.__name__
         current_method_name = inspect.currentframe().f_code.co_name
         print(f"Current class: {current_class_name}, Current method: {current_method_name}")
-    
+        
+    def update(self):
+        current_class_name = self.__class__.__name__
+        current_method_name = inspect.currentframe().f_code.co_name
+        print(f"Current class: {current_class_name}, Current method: {current_method_name}")
+        
  
 class QPushButton():
 
@@ -576,7 +585,12 @@ class QCheckBox():
         current_method_name = inspect.currentframe().f_code.co_name
         print(f"Current class: {current_class_name}, Current method: {current_method_name} {text}")
 
+    def setChecked(self, state):
+        current_class_name = self.__class__.__name__
+        current_method_name = inspect.currentframe().f_code.co_name
+        print(f"Current class: {current_class_name}, Current method: {current_method_name} {state}")
     
+        
 class _ConnectType():
 
     def __init__(self):
@@ -623,46 +637,39 @@ class _magic():
         print(f"Current class: {current_class_name}, Current method: {current_method_name} {item_changed}")
 
 
-class _text():
+class _QListWidget_text():
+
+    def __init__(self, text):
+        self._text = text
 
     def text(self):
-        current_class_name = self.__class__.__name__
-        current_method_name = inspect.currentframe().f_code.co_name
-        print(f"Current class: {current_class_name}, Current method: {current_method_name}")
-        return ""
+        return self._text
+
 
     
 class QListWidget():
-
+# No GUI yet, just datastorage
     def __init__(self, widget):
-        current_class_name = self.__class__.__name__
-        current_method_name = inspect.currentframe().f_code.co_name
-        print(f"Current class: {current_class_name}, Current method: {current_method_name} {widget}")
-
+        self.list_data = [] 
+        self.name = "QListWidget"
+        self.current_row = 0
+        
     def setObjectName(self, name):
-        current_class_name = self.__class__.__name__
-        current_method_name = inspect.currentframe().f_code.co_name
-        print(f"Current class: {current_class_name}, Current method: {current_method_name} {name}")
- 
+        self.name = name
+        
     def clear(self):
-        current_class_name = self.__class__.__name__
-        current_method_name = inspect.currentframe().f_code.co_name
-        print(f"Current class: {current_class_name}, Current method: {current_method_name}")
+        self.list_data = [] 
+        self.current_row = 0
     
     def addItem(self, text):
-        current_class_name = self.__class__.__name__
-        current_method_name = inspect.currentframe().f_code.co_name
-        print(f"Current class: {current_class_name}, Current method: {current_method_name} {text}")
+        obj = _QListWidget_text(text)
+        self.list_data.append(obj)
     
     def setCurrentRow(self, row_num):
-        current_class_name = self.__class__.__name__
-        current_method_name = inspect.currentframe().f_code.co_name
-        print(f"Current class: {current_class_name}, Current method: {current_method_name} {row_num}")
+        self.current_row = row_num
         
     currentItemChanged = _magic()
     
     def currentItem(self):
-        current_class_name = self.__class__.__name__
-        current_method_name = inspect.currentframe().f_code.co_name
-        print(f"Current class: {current_class_name}, Current method: {current_method_name}")
-        return _text()
+        return self.list_data[self.current_row]
+
