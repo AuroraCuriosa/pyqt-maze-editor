@@ -55,7 +55,7 @@ class QApplication():
             pygame.draw.circle(screen, (255, 255, 255), [100, 100], 10)
             pygame.display.flip()
             #pygame.display.update()
-            print( pygame.display.get_window_size())
+
             # required for 
             await asyncio.sleep(0)  # Very important, and keep it 0
             # Sleep for a short duration to allow other tasks to run
