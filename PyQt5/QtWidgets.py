@@ -8,6 +8,8 @@ import inspect
 import asyncio
 import pygame
 
+_last_app_instance = None
+
 class QApplication():
     '''
     Fake QApplication
@@ -21,10 +23,25 @@ class QApplication():
         current_method_name = inspect.currentframe().f_code.co_name
         print(f"Current class: {current_class_name}, Current method: {current_method_name} {args}")
         print("We could process args here")
+        self._screen_width = 640
+        self._screen_height = 480
+        
+        #
+        global _last_app_instance
+        _last_app_instance = self
+    
+      
+    def resize(self, screen_width, screen_height):
+        ''' doesn't resize the window at the moment '''
+        self._screen_width = screen_width
+        self._screen_height = screen_height
+
         
     async def _pygame_loop(self):
         pygame.init()
-        screen = pygame.display.set_mode((640, 480))
+        
+        our_flags = pygame.RESIZABLE
+        screen = pygame.display.set_mode((self._screen_width, self._screen_height), flags = our_flags)
         clock = pygame.time.Clock()
     
         running = True
@@ -38,7 +55,7 @@ class QApplication():
             pygame.draw.circle(screen, (255, 255, 255), [100, 100], 10)
             pygame.display.flip()
             #pygame.display.update()
-    
+            print( pygame.display.get_window_size())
             # required for 
             await asyncio.sleep(0)  # Very important, and keep it 0
             # Sleep for a short duration to allow other tasks to run
@@ -145,11 +162,13 @@ class QMainWindow():
         current_method_name = inspect.currentframe().f_code.co_name
         print(f"Current class: {current_class_name}, Current method: {current_method_name} {name}")
     
-    def resize(self, x, y):
+    def resize(self, screen_width, screen_height):
         current_class_name = self.__class__.__name__
         current_method_name = inspect.currentframe().f_code.co_name
-        print(f"Current class: {current_class_name}, Current method: {current_method_name} {x} {y}")
-    
+        print(f"Current class: {current_class_name}, Current method: {current_method_name} {screen_width} {screen_height}")
+        if _last_app_instance is not None:
+            _last_app_instance.resize(screen_width, screen_height)
+            
     @staticmethod
     def setWindowIcon(icon):
         print("QMainWindow::setWindowIcon")
