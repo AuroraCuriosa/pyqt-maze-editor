@@ -25,6 +25,8 @@ class QApplication():
         print("We could process args here")
         self._screen_width = 640
         self._screen_height = 480
+        self._running = False
+        self._title = "Main"
         
         #
         global _last_app_instance
@@ -35,20 +37,26 @@ class QApplication():
         ''' doesn't resize the window at the moment '''
         self._screen_width = screen_width
         self._screen_height = screen_height
-
+        if self._running:
+            print("QApplication::resize doesn't support resizing the window yet")
+    
+    def set_title(self, text):
+        self._title = text
         
     async def _pygame_loop(self):
         pygame.init()
         
         our_flags = pygame.RESIZABLE
         screen = pygame.display.set_mode((self._screen_width, self._screen_height), flags = our_flags)
+        pygame.display.set_caption(self._title)
+        
         clock = pygame.time.Clock()
     
-        running = True
-        while running:
+        self._running = True
+        while self._running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    running = False
+                    self._running = False
     
             # Your game logic and drawing code here
             screen.fill((0, 0, 0))
@@ -65,6 +73,7 @@ class QApplication():
             clock.tick(60)
     
         pygame.quit()
+        self._running = False
 
     async def _main(self):
         # Schedule other async tasks here if needed
@@ -74,13 +83,11 @@ class QApplication():
         error = 0
         current_class_name = self.__class__.__name__
         current_method_name = inspect.currentframe().f_code.co_name
-        print(f"Current class: {current_class_name}, Current method: {current_method_name}")
         
-        print("main loop for QT application goes here :-)")
         asyncio.run(self._main())
     
         return error
-    
+
     
 class QFrame():
     NoFrame = 1
@@ -153,19 +160,12 @@ class QMainWindow():
 
     def __init__(self):
         self.menu = None
-        current_class_name = self.__class__.__name__
-        current_method_name = inspect.currentframe().f_code.co_name
-        print(f"Current class: {current_class_name}, Current method: {current_method_name}")
-    
+        self._obj_name = "Untitled"
+        
     def setObjectName(self, name):
-        current_class_name = self.__class__.__name__
-        current_method_name = inspect.currentframe().f_code.co_name
-        print(f"Current class: {current_class_name}, Current method: {current_method_name} {name}")
-    
+        self._obj_name = name
+        
     def resize(self, screen_width, screen_height):
-        current_class_name = self.__class__.__name__
-        current_method_name = inspect.currentframe().f_code.co_name
-        print(f"Current class: {current_class_name}, Current method: {current_method_name} {screen_width} {screen_height}")
         if _last_app_instance is not None:
             _last_app_instance.resize(screen_width, screen_height)
             
@@ -204,10 +204,9 @@ class QMainWindow():
         return self.status_bar
     
     def setWindowTitle(self, text):
-        current_class_name = self.__class__.__name__
-        current_method_name = inspect.currentframe().f_code.co_name
-        print(f"Current class: {current_class_name}, Current method: {current_method_name} {text}")
-    
+        if _last_app_instance is not None:
+            _last_app_instance.set_title(text)
+            
     def close(self):
         current_class_name = self.__class__.__name__
         current_method_name = inspect.currentframe().f_code.co_name
