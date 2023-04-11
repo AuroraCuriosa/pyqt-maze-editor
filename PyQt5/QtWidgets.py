@@ -7,10 +7,10 @@ from PyQt5.QtCore import QRect, pyqtSignal
 import inspect
 import asyncio
 import pygame
+from PyQt5.QtCore import QtBase
 
-_last_app_instance = None
 
-class QApplication():
+class QApplication(QtBase):
     '''
     Fake QApplication
     '''
@@ -29,9 +29,7 @@ class QApplication():
         self._title = "Main"
         
         #
-        global _last_app_instance
-        _last_app_instance = self
-    
+        QtBase._Our_App_Instance = self
       
     def resize(self, screen_width, screen_height):
         ''' doesn't resize the window at the moment '''
@@ -42,7 +40,16 @@ class QApplication():
     
     def set_title(self, text):
         self._title = text
-        
+    
+    def set_main_window(self, window):
+        self._main_window = window
+    
+    def get_current_GUI_container(self):
+        return self._current_container
+
+    def set_current_GUI_container(self, GUI_container):
+        self._current_container = GUI_container
+
     async def _pygame_loop(self):
         pygame.init()
         
@@ -60,7 +67,8 @@ class QApplication():
     
             # Your game logic and drawing code here
             screen.fill((0, 0, 0))
-            pygame.draw.circle(screen, (255, 255, 255), [100, 100], 10)
+            self._main_window.draw(screen)
+            
             pygame.display.flip()
             #pygame.display.update()
 
@@ -81,8 +89,6 @@ class QApplication():
     
     def exec_(self):
         error = 0
-        current_class_name = self.__class__.__name__
-        current_method_name = inspect.currentframe().f_code.co_name
         
         asyncio.run(self._main())
     
@@ -156,18 +162,23 @@ class QToolBar():
         print(f"Current class: {current_class_name}, Current method: {current_method_name} {action}")
     
     
-class QMainWindow():
+class QMainWindow(QtBase):
 
     def __init__(self):
         self.menu = None
         self._obj_name = "Untitled"
+        self._internal_x = 0
+        self._internal_y = 0
+        QtBase._Our_App_Instance.set_main_window(self)
+        QtBase._Our_App_Instance.set_current_GUI_container(self)
+        
+        self.window_elements = []
         
     def setObjectName(self, name):
         self._obj_name = name
         
     def resize(self, screen_width, screen_height):
-        if _last_app_instance is not None:
-            _last_app_instance.resize(screen_width, screen_height)
+        QtBase._Our_App_Instance.resize(screen_width, screen_height)
             
     @staticmethod
     def setWindowIcon(icon):
@@ -204,8 +215,7 @@ class QMainWindow():
         return self.status_bar
     
     def setWindowTitle(self, text):
-        if _last_app_instance is not None:
-            _last_app_instance.set_title(text)
+        QtBase._Our_App_Instance.set_title(text)
             
     def close(self):
         current_class_name = self.__class__.__name__
@@ -228,6 +238,16 @@ class QMainWindow():
         current_method_name = inspect.currentframe().f_code.co_name
         print(f"Current class: {current_class_name}, Current method: {current_method_name}")
 
+    def draw(self, screen):
+        for widget in self.window_elements:
+            widget.draw(screen)
+
+    def add_child(self, obj, width, height):
+        self.window_elements.append(obj)
+        x = self._internal_x
+        y = self._internal_y
+        self._internal_x += width
+        return x, y
 
 # fake version        
 QT_VERSION_STR = "1.0.0"

@@ -5,8 +5,11 @@ Created on 5 Apr 2023
 '''
 
 import inspect
+import pygame
+from PyQt5.QtCore import QtBase
 
-class QIcon():
+
+class QIcon(QtBase):
     '''
     QtGui
     '''
@@ -18,26 +21,45 @@ class QIcon():
         current_class_name = self.__class__.__name__
         current_method_name = inspect.currentframe().f_code.co_name
         print(f"Current class: {current_class_name}, Current method: {current_method_name} {filename}")
-
-    
+        if filename is not None:
+            self._image = pygame.image.load(filename)
+            width, height = self._image.get_size()
+            self.x, self.y = QtBase._Our_App_Instance.get_current_GUI_container().add_child(self, width, height)
+        else:
+            self._image = None
+        
+        
     @staticmethod
     def fromTheme(theme):
         print(f"QIcon::fromTheme {theme}")
     
-    def addPixmap(self, filename, param1, param2):
+    def addPixmap(self, pixmap, param1, param2):
         current_class_name = self.__class__.__name__
         current_method_name = inspect.currentframe().f_code.co_name
-        print(f"Current class: {current_class_name}, Current method: {current_method_name} {filename} {param1} {param2}")
-    
+        print(f"Current class: {current_class_name}, Current method: {current_method_name} don't use parameters {param1} {param2}")
+        self._image = pixmap.get_image()
+        width, height = self._image.get_size()
+        self.x, self.y = QtBase._Our_App_Instance.get_current_GUI_container().add_child(self, width, height)
+        
+        # override class items
+        self.Normal = param1
+        self.On = param2
+        
     Normal = 1
     On = True
+    
+    def draw(self, screen):
+        screen.blit(self._image, (self.x, self.y))
     
 class QPixmap():
     def __init__(self, filename):
         current_class_name = self.__class__.__name__
         current_method_name = inspect.currentframe().f_code.co_name
         print(f"Current class: {current_class_name}, Current method: {current_method_name} {filename}")
-    
+        self._image = pygame.image.load(filename)
+
+    def get_image(self):
+        return self._image
     
 class QKeySequence():
     @staticmethod

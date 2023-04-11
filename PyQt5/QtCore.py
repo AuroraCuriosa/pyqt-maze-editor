@@ -6,7 +6,13 @@ Created on 5 Apr 2023
 import os
 import inspect
 
-class Qt():
+# This is a pointer to the application instance
+
+class QtBase():
+    _Our_App_Instance = None
+
+
+class Qt(QtBase):
     '''
     Qt
     '''
